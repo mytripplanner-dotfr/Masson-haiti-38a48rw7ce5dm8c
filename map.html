@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carte du voyage - Masson haiti</title>
+  <style>
+    body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    #map { height: 100vh; width: 100%; }
+    .info-window { max-width: 250px; font-family: Arial, sans-serif; }
+    .info-window img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; }
+    .info-window h3 { margin: 0 0 5px 0; font-size: 16px; color: #333; }
+    .info-window p { margin: 5px 0; font-size: 14px; color: #666; }
+    .info-window a { color: #1a73e8; text-decoration: none; }
+    .info-window a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  
+  <script>
+    function initMap() {
+      const center = { lat: 18.3907445, lng: -72.46541024285713 };
+      const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: center
+      });
+      
+      const markers = [{"lat":18.2363838,"lng":-72.5377867,"name":"Jacmel / Masson","jour":1,"titre":"Arrivée en terre haïtienne","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=18.2363838,-72.5377867&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=18.2363838,-72.5377867","aiImageUrl":"jour1.jpg"},{"lat":18.2363838,"lng":-72.5377867,"name":"Jacmel","jour":2,"titre":"Jacmel, ville d'art et d'histoire","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=18.2363838,-72.5377867&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=18.2363838,-72.5377867","aiImageUrl":"jour2.jpg"},{"lat":18.2430063,"lng":-72.52639839999999,"name":"Bassin Bleu (près de Jacmel)","jour":3,"titre":"Merveille naturelle: Bassin Bleu","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=18.2430063,-72.52639839999999&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=18.2430063,-72.52639839999999","aiImageUrl":"jour3.jpg"},{"lat":18.971187,"lng":-72.285215,"name":"Masson / Raymond Les Bains","jour":4,"titre":"Détente sur la côte de Masson","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=18.971187,-72.285215&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=18.971187,-72.285215","aiImageUrl":"jour4.jpg"},{"lat":18.2363838,"lng":-72.5377867,"name":"Collines de Jacmel","jour":6,"titre":"Nature et saveurs des hauteurs","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=18.2363838,-72.5377867&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=18.2363838,-72.5377867","aiImageUrl":"jour6.jpg"},{"lat":18.2363838,"lng":-72.5377867,"name":"Côte de Jacmel","jour":8,"titre":"Aventure maritime et snorkeling","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=18.2363838,-72.5377867&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=18.2363838,-72.5377867","aiImageUrl":"jour8.jpg"},{"lat":18.575483,"lng":-72.29511149999999,"name":"Port-au-Prince / Aéroport","jour":10,"titre":"Départ d'Haïti","streetViewUrl":"https://maps.googleapis.com/maps/api/streetview?size=600x400&location=18.575483,-72.29511149999999&key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI","streetViewLinkUrl":"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=18.575483,-72.29511149999999","aiImageUrl":"jour10.jpg"}];
+      
+      markers.forEach((markerData) => {
+        const marker = new google.maps.Marker({
+          position: { lat: markerData.lat, lng: markerData.lng },
+          map: map,
+          title: markerData.name,
+          label: String(markerData.jour)
+        });
+        
+        const contentString = `
+          <div class="info-window">
+            <img src="${markerData.streetViewUrl}" alt="Street View de ${markerData.name}" />
+            <h3>Jour ${markerData.jour}</h3>
+            <p><strong>${markerData.name}</strong></p>
+            <p><a href="${markerData.streetViewLinkUrl}" target="_blank" rel="noopener noreferrer"><strong>${markerData.titre}</strong></a></p>
+          </div>
+        `;
+        
+        const infoWindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+        
+        marker.addListener('click', () => {
+          infoWindow.open(map, marker);
+        });
+      });
+    }
+  </script>
+  
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5WUNvRC9eOjHRLt92fs4hsp0Auje3aAI&callback=initMap">
+  </script>
+</body>
+</html>
